@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ToDo Application</title>
+</head>
+<body>
+    <h2>ToDo List</h2>
+    <form method="POST" action="/add">
+        <input type="text" name="title" placeholder="Add new task">
+        <input type="submit" value="Add">
+    </form>
+    <ul>
+        {% for task in tasks %}
+            <li>{{ task[1] }} <a href="/delete/{{ task[0] }}">Delete</a></li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

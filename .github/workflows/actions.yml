@@ -1,0 +1,23 @@
+name: Test CI/CD PIPELINE
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install Dependencies
+        run: |
+          cd Github-Actions/
+          pip3 install -r requirements.txt
+          echo "Dependency installation is complete"
+
+      - name: Build Docker Image
+        run: |
+          cd Github-Actions/
+          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/flaskapp .
+          docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_PASSWORD }}
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/flaskapp
